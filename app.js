@@ -64,3 +64,53 @@ getDate(1,()=>{
 });  
 
 // Promisses to solve callback hell problem
+
+
+ const getPromise = () => {return new Promise ((resolve,reject)=>{
+    console.log("I'm a promise");
+    // resolve("Success");
+    reject("With some error");
+});
+ };
+ let promise=getPromise();
+ promise.then((result) => {
+    console.log("Promiss fulfilled",result);
+ }).catch((error) => {
+    console.log("prmiss Rejected",error);
+ });
+
+//Promise chain
+
+function asyncFun(){
+    return new Promise((resolve,reject) =>{
+        setTimeout(() => {
+            console.log("Some Data-1")
+            resolve("success");
+        }, 4000);
+    })
+};
+
+function asyncFun2(){
+    return new Promise((resolve,reject) =>{
+        setTimeout(() => {
+            console.log("Some Data-2")
+            resolve("success");
+        }, 4000);
+    })
+};
+
+
+console.log("Fetching Data-1...")
+let p1=asyncFun();
+p1.then((result) => {
+    console.log(result);
+    console.log("Fetching Data-2...");
+    let p2= asyncFun2();
+    p2.then((result) => {
+        console.log(result);
+    }).catch((err) => {
+        console.log(err);
+    });
+}).catch((err) => {
+    console.log(err);
+});
