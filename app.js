@@ -36,20 +36,24 @@ calculator(1,2,sum);
 let hello=() =>{
     console.log("hello");
 }
-setTimeout(hello,3000 ); // we pass hello here which is also a callback
+setTimeout(hello,4000 ); // we pass hello here which is also a callback
 
 
 
 
 function getDate(dataId,getNextData ){
-    setTimeout(() => {
-        console.log("data",dataId);
-        if(getNextData){
-            getNextData();
-        }
-    }, 2000);
+
+    return new Promise((resolve,reject) => {
+        setTimeout(() => {
+            console.log("data",dataId);
+            if(getNextData){
+                getNextData();
+            }
+        }, 6000);
+    })
 
 };
+
 //Callback Hell complex way
 getDate(1,()=>{
     getDate(2,()=>{
@@ -61,7 +65,30 @@ getDate(1,()=>{
             });
         });
     });
-});  
+}); 
+
+function getData(dataId){
+
+    return new Promise((resolve,reject) => {
+        setTimeout(() => {
+            console.log("data",dataId);
+            resolve("Success");
+        }, 8000);
+    })
+
+};
+
+//Promise chain
+
+getData(1).then((result) => {
+    return getData(2);
+})
+.then((res) => {
+    return getData(3);
+})
+.then((res) => {
+    console.log(res );
+})
 
 // Promisses to solve callback hell problem
 
@@ -86,7 +113,7 @@ function asyncFun(){
         setTimeout(() => {
             console.log("Some Data-1")
             resolve("success");
-        }, 4000);
+        }, 10000);
     })
 };
 
@@ -95,7 +122,7 @@ function asyncFun2(){
         setTimeout(() => {
             console.log("Some Data-2")
             resolve("success");
-        }, 4000);
+        }, 12000);
     })
 };
 
